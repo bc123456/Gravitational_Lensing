@@ -1,0 +1,37 @@
+import matplotlib.pyplot as plt
+import numpy as np
+import math
+import re
+from scipy.optimize import curve_fit
+import operator
+from __future__ import division
+import itertools
+import pyfits
+
+flux_3a = 0.3678
+flux_3b = 0.7723
+
+flux_6a = 162
+flux_6b = 136
+
+mag_3a = np.array([53.96,42.64,35.83,31.27,28.01,25.57,23.67,22.15,20.9,19.87,18.99]) #magnification at 3a at different redshifts
+mag_3b = np.array([22.25,25.19,28.64,32.74,37.71,43.84,51.6,61.73,75.51,95.36,126.39]) #magnification at 3b at different redshifts
+
+mag_6a = np.array([10.7,10.68,10.66,10.64,10.62,10.60,10.58,10.56,10.55,10.6,10.51,10.49,10.48,10.46,10.45,10.5,10.49,10.4,10.39,10.4,10.39,10.37,10.36])
+mag_6b = np.array([7.61,7.63,7.65,7.67,7.70,7.72,7.74,7.76,7.78,7.8,7.82,7.84,7.86,7.88,7.89,7.91,7.93,7.95,7.97,7.95,7.97,7.99,8.0])
+#redshift = np.arange(2.6,3.7,0.1)
+redshift = np.arange(10.5,12.51,0.1)
+print(redshift)
+
+#system 6
+x = redshift
+y = []
+for i in np.arange(len(redshift)):
+    pred_6b = flux_6a/mag_6a[i] * mag_6b[i]
+    pred_6a = flux_6b/mag_6b[i] * mag_6a[i]
+    k = abs((flux_6b / flux_6a)-(pred_6b / pred_6a))
+    y.append(k)
+
+plt.plot(x,y)
+#plt.axis([0, 14, 0, 20])
+plt.show()
