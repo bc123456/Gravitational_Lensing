@@ -1,0 +1,18 @@
+OPENR, 1, '/home/junolee/Lensing/catalogs/hlsp_clash_hst_acs-ir_rxj2248_cat.txt'
+
+header = STRARR(146)
+READF, 1, header
+data = dblarr(125, 3471)  
+READF, 1, data
+close, 1
+
+coordinates=dblarr(2,3471)
+coordinates(0,*)=data(3,*)
+coordinates(1,*)=data(4,*)
+
+openw, 2, '/home/junolee/Lensing/catalogs/allxy.dat'
+printf, 2, coordinates
+close, 2
+
+
+
