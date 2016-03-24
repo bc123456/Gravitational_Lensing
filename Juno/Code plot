@@ -1,0 +1,70 @@
+-------------------------------------///Reading data from catalog///----------------------------------------
+OPENR, 1, '/home/junolee/Lensing/catalogs/hlsp_clash_hst_acs-ir_rxj2248_cat.txt'
+
+header = STRARR(146)
+READF, 1, header
+data = FLTARR(125, 3471)  
+READF, 1, data
+
+close, 1
+
+----------------------------------------///ploting red sequence using Z & lines///-------------------------------------------
+;openr, 3, '/home/junolee/Lensing/catalogs/galaxy_member_str.dat'
+;
+;galamem=fltarr(125,92)
+;readf, 3, galamem
+;
+;f435w_mag = fltarr(92)
+;f160w_mag = fltarr(92)
+;col=fltarr(92)
+;mag=fltarr(92)
+;
+;f435w_mag = galamem(37,*)
+;f160w_mag = galamem(109,*)
+;col = f435w_mag - f160w_mag
+;mag = f160w_mag
+;
+;plot, mag, col, psym=1, xtitle='F160W', ytitle='F435W-F160W', xrange=[15,35], yrange=[-10,10]
+;
+;oplot, mag, (-0.25*mag+8.0)
+;oplot, mag, (-0.15*mag+7.0)
+;
+;array=fltarr(30)
+;array=(array+1)*22
+;yarr=indgen(30)
+;yarr=yarr-15
+;oplot, array, yarr
+-------------------------------------------///ploting red sequence using lines only///----------------------------------------------
+;openr, 3, '/home/junolee/Lensing/catalogs/galaxy_member_str.dat'
+;
+;data=fltarr(125,92)
+;readf, 3, data
+
+;close, 3
+
+f435w_mag = fltarr(3471)
+f160w_mag = fltarr(3471)
+col=fltarr(3471)
+mag=fltarr(3471)
+
+f435w_mag = data(37,*)
+f160w_mag = data(109,*)
+col = f435w_mag - f160w_mag
+mag = f160w_mag
+
+plot, mag, col, psym=3, xtitle='F160W', ytitle='F435W-F160W', xrange=[10,30], yrange=[-10,10]
+
+oplot, mag, (-0.35*mag+9.75)
+oplot, mag, (-0.15*mag+6.95)
+
+array=fltarr(30)
+array=(array+1)*22.5
+yarr=indgen(30)
+yarr=yarr-15
+oplot, array, yarr
+
+------------------------------------------------///Extracting Header///---------------------------------------------
+openw, 4, '/home/junolee/Lensing/catalogs/header.txt'
+printf, 4, header
+close, 4
+

@@ -1,0 +1,102 @@
+----------------------------------------------///making XY_Mass_RXJ2248_compact_halo.dat///----------------------------------
+im=readfits('/home/junolee/Lensing/images/trilogy/rxj2248.fits')
+
+cropR=im(1091:3907,1091:3907,0)
+cropG=im(1091:3907,1091:3907,1)
+cropB=im(1091:3907,1091:3907,2)
+
+writefits, '/home/junolee/Lensing/images/cropR.fits',cropR
+writefits, '/home/junolee/Lensing/images/cropG.fits',cropG
+writefits, '/home/junolee/Lensing/images/cropB.fits',cropB
+
+
+cropR=readfits('/home/junolee/Lensing/images/cropR.fits',hdr)
+cropG=readfits('/home/junolee/Lensing/images/cropG.fits',hdr)
+cropB=readfits('/home/junolee/Lensing/images/cropB.fits',hdr)
+
+
+hrebin, cropR, hdr, R, newhdr, OUTSIZE =[512,512]
+hrebin, cropG, hdr, G, newhdr, OUTSIZE =[512,512]
+hrebin, cropB, hdr, B, newhdr, OUTSIZE =[512,512]
+
+writefits, '/home/junolee/Lensing/images/R.fits',R
+writefits, '/home/junolee/Lensing/images/G.fits',G
+writefits, '/home/junolee/Lensing/images/B.fits',B
+
+openr, 1, '/home/junolee/Lensing/catalogs/coordinates.txt'
+coordinates=fltarr(2,108)
+readf, 1, coordinates
+scaled_coordinates=fltarr(2,108)
+scaled_coordinates=(coordinates-2499.5)/5.5
+close, 1
+
+openw, 2, '/home/junolee/Lensing/catalogs/scaled_positions.txt'
+printf, 2, scaled_coordinates
+close, 2
+
+;;;;;;;---------------------------------------///Mass from F160W mag/flux///-------------------------------
+
+openr, 1, '/home/junolee/Lensing/catalogs/galaxy_member.dat'
+data=dblarr(125,108)
+readf, 1, data
+close, 1
+
+flux=dblarr(108)
+flux=data(112,*)
+
+openw, 2, '/home/junolee/Lensing/catalogs/f160W_flux.txt'
+printf, 2, flux
+close, 2
+
+----------------------------------------------///R_s///-------------------------------------------------
+openr, 1, '/home/junolee/Lensing/catalogs/galaxy_member.dat'
+data=dblarr(125,108)
+readf, 1, data
+close, 1
+
+openw, 2, '/home/junolee/Lensing/catalogs/R_s.txt'
+fwhm=dblarr(108)
+fwhm=data(5,*)
+R_s=dblarr(108)
+R_s=fwhm*4
+R_s(98)=fwhm(98)*5.5
+R_s(104)=fwhm(104)*5
+R_s(89)=fwhm(89)*4
+R_s(107)=fwhm(107)*4
+for j=0,99 do $
+for a=0,7 do $
+if j eq i(a) then R_S(i(a))=fwhm(i(a))*3
+R_s(101)=fwhm(101)
+printf, 2, R_s
+close, 2
+
+-----------------------------------------------------///r_soft///------------------------------------------------
+r_soft=fltarr(1,108)
+r_soft=r_soft+0.0500000	
+
+openw, 1, '/home/junolee/Lensing/catalogs/r_soft.txt.'
+printf, 1, r_soft
+close, 1
+------------------------------------------------------------------------------------------------------------------
+openr, 1, '/home/junolee/Lensing/catalogs/Code/easy.txt
+easy=fltarr(10,108)
+readf, 1, easy
+close, 1
+
+XY_Mass_RXJ2248_compact_halo=dblarr(9,108)
+
+XY_Mass_RXJ2248_compact_halo(0,*)=easy(0,*)
+XY_Mass_RXJ2248_compact_halo(1,*)=easy(1,*)
+XY_Mass_RXJ2248_compact_halo(2,*)=easy(2,*)
+XY_Mass_RXJ2248_compact_halo(3,*)=easy(4,*)
+XY_Mass_RXJ2248_compact_halo(4,*)=easy(5,*)
+XY_Mass_RXJ2248_compact_halo(5,*)=easy(6,*)
+XY_Mass_RXJ2248_compact_halo(6,*)=easy(7,*)
+XY_Mass_RXJ2248_compact_halo(7,*)=easy(8,*)
+XY_Mass_RXJ2248_compact_halo(8,*)=easy(9,*)
+
+openw, 2, '/home/junolee/Lensing/XY_Mass_RXJ2248_compact_halo.dat'
+printf, 2, XY_Mass_RXJ2248_compact_halo
+close, 2
+
+

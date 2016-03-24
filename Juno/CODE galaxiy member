@@ -1,0 +1,65 @@
+--------------------------------------///Extracting selected galaxiy member with 3 lines///--------------------------------------
+OPENR, 1, '/home/junolee/Lensing/catalogs/hlsp_clash_hst_acs-ir_rxj2248_cat.txt'
+
+header = STRARR(146)
+READF, 1, header
+data = dblarr(125, 3471)  
+READF, 1, data
+close, 1
+
+OPENR, 1, '/home/junolee/Lensing/catalogs/hlsp_clash_hst_acs-ir_rxj2248_cat.txt'
+
+header = STRARR(146)
+READF, 1, header
+data_str = STRARR(3471)  
+READF, 1, data_str
+close, 1
+
+openw, 2, '/home/junolee/Lensing/catalogs/galaxy_member.dat'
+
+col=dblarr(3471)
+mag=dblarr(3471)
+
+col = data(37,*) - data(109,*)
+mag = data(109,*)
+
+for i=0,3470 do $
+if mag(i) le 22.5 and col(i)+(0.35*mag(i)) ge 9.75 and col(i)+(0.15*mag(i)) le 6.95 then printf, 2, data_str(i)
+close, 2
+
+--------------------------------------///Extracting selected galaxiy member with Z range///--------------------------------------
+;zb=fltarr(3471)
+;zb=data(115,*)
+
+;openw, 3, '/home/junolee/Lensing/catalogs/galaxy_member_Z.dat'
+
+;for i=0,3470 do $
+;if zb(i) ge 0.323 and zb(i) le 0.373 then printf, 3, data_str(i)
+;close, 3
+----------------------------------------///Extracting candidate members using spectro Z///---------------------------------------
+;OPENR, 1, '/home/junolee/Lensing/catalogs/spectroscopic Z.txt'
+
+;header = STRARR(1)
+;READF, 1, header
+;data = dblarr(4, 116)  
+;READF, 1, data
+;close, 1
+
+;OPENR, 1, '/home/junolee/Lensing/catalogs/spectroscopic Z.txt'
+
+;header = STRARR(1)
+;READF, 1, header
+;data_str = STRARR(116)  
+;READF, 1, data_str
+;close, 1
+
+
+;zb=fltarr(116)
+;zb=data(3,*)
+
+;openw, 3, '/home/junolee/Lensing/catalogs/spectro_Z_candidate members.dat'
+
+;for i=0,115 do $
+;if zb(i) ge 0.328 and zb(i) le 0.368 then printf, 3, data_str(i)
+;close, 3
+ 

@@ -1,0 +1,52 @@
+-----------------------------------------///Loading x and y from galaxy_member.dat///------------------------------------------
+openr, 1, '/home/junolee/Lensing/catalogs/galaxy_member.dat'
+data=dblarr(125,110)
+coordinates=dblarr(2,110)
+
+readf, 1, data
+coordinates(0,*)=data(3,*)
+coordinates(1,*)=data(4,*)
+close, 1
+
+openw, 2, '/home/junolee/Lensing/catalogs/coordinates.txt'
+printf, 2, coordinates
+close, 2
+-----------------------------------------///Loading x and y from galaxy_member_Z.dat///------------------------------------------
+;openr, 1, '/home/junolee/Lensing/catalogs/galaxy_member_Z.dat'
+;data_z=fltarr(125,92)
+;coordinates_z=fltarr(2,92)
+
+;readf, 1, data_z
+;coordinates_z(0,*)=data_z(3,*)
+;coordinates_z(1,*)=data_z(4,*)
+;close, 1
+
+;openw, 2, '/home/junolee/Lensing/catalogs/coordinates_z.dat'
+;printf, 2, coordinates_z
+;close, 2
+-----------------------------------------///Loading RA and Dec from galaxy_member.dat///------------------------------------------
+openr, 1, '/home/junolee/Lensing/catalogs/galaxy_member.dat'
+data=dblarr(125,104)
+ra_dec=dblarr(2,104)
+
+readf, 1, data
+ra_dec(0,*)=data(1,*)
+ra_dec(1,*)=data(2,*)
+close, 1
+
+openw, 2, '/home/junolee/Lensing/catalogs/RA_DEC.txt'
+printf, 2, ra_dec
+close, 2
+----------------------------------------///Loading RA and Dec from galaxy_member_Z.dat///------------------------------------------
+;openr, 1, '/home/junolee/Lensing/catalogs/galaxy_member_Z.dat'
+;data_z=fltarr(125,92)
+;ra_dec_z=fltarr(2,92)
+
+;readf, 1, data_z
+;ra_dec_z(0,*)=data_z(1,*)
+;ra_dec_z(1,*)=data_z(2,*)
+;close, 1
+
+;openw, 2, '/home/junolee/Lensing/catalogs/RA_DEC_z.dat'
+;printf, 2, ra_dec_z
+;close, 2
